@@ -30,19 +30,6 @@ function updateTurn() {
 }
 
 function updateBoard() {
-  console.log(gameState.turn, "<<<");
-  if (gameState.p1.tile === "X") {
-    gameState.p1.tile = "O";
-    gameState.p2.tile = "X";
-    gameState.turn = "O";
-  } else {
-    gameState.p1.tile = "X";
-    gameState.p2.tile = "O";
-    gameState.turn = "X";
-  }
-
-  console.log(gameState.turn, ">>>");
-
   const tiles = [...gameBoard.children];
   tiles.forEach((tile) => {
     if (tile.disabled) {
