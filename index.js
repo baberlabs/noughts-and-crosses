@@ -1,19 +1,61 @@
-const resetButton = document.getElementById("reset-button");
-const turn = document.getElementById("turn");
+const resetButton = document.querySelector("#reset-button");
+const turn = document.querySelector("#turn");
 const gameBoard = document.querySelector(".game-board");
-const message = document.getElementById("message");
+const message = document.querySelector("#message");
+const player1Score = document.querySelector("#p-1");
+const player2Score = document.querySelector("#p-2");
 
-let currentTurn = "X";
+const gameState = {
+  p1: {
+    tile: "X",
+    score: 0,
+  },
+  p2: {
+    tile: "O",
+    score: 0,
+  },
+  turn: "X",
+  gameOver: false,
+  counter: 0,
+};
 
 function updateTurn() {
-  if (currentTurn === "X") {
-    currentTurn = "O";
+  if (gameState.turn === "X") {
+    gameState.turn = "O";
+    turn.innerText = `Player 2 (${gameState.turn})`;
   } else {
-    currentTurn = "X";
+    gameState.turn = "X";
+    turn.innerText = `Player 1 (${gameState.turn})`;
   }
 }
 
+function updateBoard() {
+  console.log(gameState.turn, "<<<");
+  if (gameState.p1.tile === "X") {
+    gameState.p1.tile = "O";
+    gameState.p2.tile = "X";
+    gameState.turn = "O";
+  } else {
+    gameState.p1.tile = "X";
+    gameState.p2.tile = "O";
+    gameState.turn = "X";
+  }
+
+  console.log(gameState.turn, ">>>");
+
+  const tiles = [...gameBoard.children];
+  tiles.forEach((tile) => {
+    if (tile.disabled) {
+      tile.disabled = false;
+    } else {
+      tile.disabled = true;
+    }
+  });
+}
+
 function checkGame() {
+  gameState.counter++;
+  console.log(gameState.counter);
   const tiles = [...gameBoard.children];
   const tileObj = {};
   tiles.forEach((tile, index) => {
@@ -37,30 +79,47 @@ function checkGame() {
 
     if (firstTile === "X" && secondTile === "X" && thirdTile === "X") {
       message.innerText = `X wins!`;
+      gameState.gameOver = true;
+      updateBoard();
+      player1Score.innerText = Number(player1Score.innerText) + 1;
     } else if (firstTile === "O" && secondTile === "O" && thirdTile === "O") {
       message.innerText = `O wins!`;
+      gameState.gameOver = true;
+      updateBoard();
+      player2Score.innerText = Number(player2Score.innerText) + 1;
+    }
+
+    if (gameState.counter === 9 && gameState.gameOver === false) {
+      message.innerText = "Draw";
+      gameState.gameOver = true;
+      updateBoard();
     }
   });
 }
 
 gameBoard.addEventListener("click", (event) => {
-  const tile = event.target;
-  if (!tile.classList.contains("true")) {
-    tile.innerText = currentTurn;
-    tile.classList.add("true");
-    tile.classList.add(currentTurn);
-    checkGame();
-    updateTurn();
+  if (event.target.className === "tile") {
+    const tile = event.target;
+    if (!tile.classList.contains("true")) {
+      console.log(gameState.turn);
+      tile.innerText = gameState.turn;
+      tile.classList.add("true");
+      tile.classList.add(gameState.turn);
+      checkGame();
+      updateTurn();
+    }
   }
 });
 
 resetButton.addEventListener("click", () => {
-  currentTurn = "X";
-
+  turn.innerText = `Player 1 ${gameState.turn}`;
+  gameState.counter = 0;
+  gameState.gameOver = false;
   const tiles = [...gameBoard.children];
   tiles.forEach((tile) => {
     tile.innerText = "";
     tile.classList = "tile";
+    tile.disabled = false;
   });
   message.innerText = "";
 });
