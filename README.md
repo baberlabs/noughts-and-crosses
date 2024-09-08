@@ -44,8 +44,8 @@ This project is a web-based Noughts and Crosses game that allows two players to 
 
 This project was pair programmed by:
 
--   Baber Khan (https://github.com/baberlabs)
--   Daniel Taylor (https://github.com/DTCoding01)
+-   [Baber Khan](https://github.com/baberlabs)
+-   [Daniel Taylor](https://github.com/DTCoding01)
 
 Contributions, issues, and feature requests are welcome. Feel free to check [issues page](https://github.com/your-username/noughts-and-crosses/issues) if you want to contribute.
 
