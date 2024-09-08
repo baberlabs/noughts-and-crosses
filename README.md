@@ -6,6 +6,10 @@ A simple, interactive web-based implementation of the classic Noughts and Crosse
 
 This project is a web-based Noughts and Crosses game that allows two players to compete against each other. The game features a clean, user-friendly interface with a 3x3 grid, player turn indicator, and score tracking.
 
+## Live Demo
+
+Visit [baberlabs.github.io/noughts-and-crosses](https://baberlabs.github.io/noughts-and-crosses/) for a live demo.
+
 ## Features
 
 -   Interactive 3x3 game board
